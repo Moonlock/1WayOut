@@ -64,19 +64,10 @@ class World:
 
 		self.curRoom = center
 
+		def move(self, newRoom):
+			for i in self.curRoom.exits
+				if i.name = newRoom
+					self.curRoom = newRoom
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					
 
