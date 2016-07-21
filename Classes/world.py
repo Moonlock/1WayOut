@@ -1,12 +1,14 @@
-class Room:
-	def __init__(self, name, desc):
-		self.name = name
-		self.desc = desc
-		self.exits = []
-		self.npcs = []
-		self.items = []
 
 class World:
+
+	class Room:
+		def __init__(self):
+			self.name = ""
+			self.desc = ""
+			self.exits = []
+			self.npcs = []
+			self.items = []
+
 	def __init__(self):
 		self.rooms = []
 		self.createRooms()
@@ -23,16 +25,30 @@ class World:
 		print("	        |___|			")
 
 	def createRooms(self):
-		north = Room("North", "The north room.")
-		south = Room("South", "The south room.")
-		east = Room("East", "The east room.")
-		west = Room("West", "The west room.")
-		center = Room("Center", "The center room.")
+		north = self.Room()
+		south = self.Room()
+		east = self.Room()
+		west = self.Room()
+		center = self.Room()
 
+		north.name = "North"
+		north.desc = "The north room."
 		north.exits.append(center)
+
+		south.name = "South"
+		south.desc = "The south room."
 		south.exits.append(center)
+
+		east.name = "East"
+		east.desc = "The east room."
 		east.exits.append(center)
+
+		west.name = "West"
+		west.desc = "The west room."
 		west.exits.append(center)
+
+		center.name = "Center"
+		center.desc = "The center room."
 		center.exits.append(south)
 		center.exits.append(north)
 		center.exits.append(west)
@@ -45,6 +61,8 @@ class World:
 		self.rooms.append(east)
 		self.rooms.append(west)
 		self.rooms.append(center)
+
+		self.curRoom = center
 
 
 
