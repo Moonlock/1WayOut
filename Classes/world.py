@@ -1,5 +1,5 @@
-
 from __future__ import print_function
+import zombie
 
 class World:
 
@@ -76,7 +76,7 @@ class World:
 		north.exits.append(center)
 
 		south.name = "South"
-		south.desc = "The south room."
+		south.desc = "The south roomfg."
 		south.exits.append(center)
 
 		east.name = "East"
@@ -96,6 +96,11 @@ class World:
 
 		north.items.append("item")
 
+		# Adding enemy to environment
+		enemyZombie = zombie.Zombie()
+		east.npcs.append(enemyZombie)
+		#
+
 		self.rooms.append(north)
 		self.rooms.append(south)
 		self.rooms.append(east)
@@ -103,6 +108,4 @@ class World:
 		self.rooms.append(center)
 
 		self.curRoom = center
-
-					
 
