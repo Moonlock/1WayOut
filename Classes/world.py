@@ -48,8 +48,8 @@ class World:
 
 	def move(self, newRoom):
 		for exit in self.curRoom.exits:
-			if exit.name == newRoom:
-				self.curRoom = exit
+			if exit['localName'].lower() == newRoom.lower():
+				self.curRoom = exit['room']
 				self.displayRoom()
 				return
 		print("You can't go that way.")
@@ -60,7 +60,7 @@ class World:
 		print(self.curRoom.desc)
 		print("Exits: ", end="")
 		for exit in self.curRoom.exits:
-			print(exit.name + ", ", end="")
+			print(exit['localName'] + ", ", end="")
 		print("\n")
 
 
@@ -73,26 +73,26 @@ class World:
 
 		north.name = "North"
 		north.desc = "The north room."
-		north.exits.append(center)
+		north.exits.append({"room": center, "localName": "South"})
 
 		south.name = "South"
 		south.desc = "The south room."
-		south.exits.append(center)
+		south.exits.append({"room": center, "localName": "North"})
 
 		east.name = "East"
 		east.desc = "The east room."
-		east.exits.append(center)
+		east.exits.append({"room": center, "localName": "West"})
 
 		west.name = "West"
 		west.desc = "The west room."
-		west.exits.append(center)
+		west.exits.append({"room": center, "localName": "East"})
 
 		center.name = "Center"
 		center.desc = "The center room."
-		center.exits.append(south)
-		center.exits.append(north)
-		center.exits.append(west)
-		center.exits.append(east)
+		center.exits.append({"room": north, "localName": "North"})
+		center.exits.append({"room": south, "localName": "South"})
+		center.exits.append({"room": east, "localName": "East"})
+		center.exits.append({"room": west, "localName": "West"})
 
 		north.items.append("item")
 

@@ -27,6 +27,14 @@ def printHelp():
 def parseCommand(command, arg=""):
 	if command == "go":
 		world_obj.move(arg)
+	elif command == "n":
+		world_obj.move("North")
+	elif command == "s":
+		world_obj.move("South")
+	elif command == "e":
+		world_obj.move("East")
+	elif command == "w":
+		world_obj.move("West")
 	elif (command == "l") or (command == "look"):
 		if arg == "":
 			world_obj.displayRoom()
