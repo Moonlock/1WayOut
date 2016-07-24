@@ -1,5 +1,6 @@
 
 from __future__ import print_function
+import items
 
 class World:
 
@@ -47,6 +48,15 @@ class World:
 		print("	        |___|			")
 
 	def move(self, newRoom):
+		if newRoom.lower() == "n":
+			newRoom = "North"
+		elif newRoom.lower() == "s":
+			newRoom = "South"
+		elif newRoom.lower() == "e":
+			newRoom = "East"
+		elif newRoom.lower() == "s":
+			newRoom = "South"
+
 		for exit in self.curRoom.exits:
 			if exit['localName'].lower() == newRoom.lower():
 				self.curRoom = exit['room']
@@ -58,11 +68,30 @@ class World:
 		print("")
 		print(self.curRoom.name)
 		print(self.curRoom.desc)
-		print("Exits: ", end="")
-		for exit in self.curRoom.exits:
-			print(exit['localName'] + ", ", end="")
-		print("\n")
 
+		print("Exits: ", end="")
+		self.displayList(self.curRoom.exits, "localName")
+
+		if self.curRoom.items != []:
+			print("Items: ", end="")
+			self.displayList(self.curRoom.items, "name")
+
+		if self.curRoom.npcs != []:
+			print("You see: ", end="")
+			self.displayList(self.curRoom.npcs, "name")
+
+		print("")
+
+	def displayList(self, myList, name):
+		i = 1
+		numExits = len(self.curRoom.exits)
+
+		for element in myList:
+			if i < len(myList):
+				print(element[name] + ", ", end="")
+			else:
+				print(element[name] + ".")
+			i += 1
 
 	def createRooms(self):
 		north = self.Room()
@@ -70,6 +99,9 @@ class World:
 		east = self.Room()
 		west = self.Room()
 		center = self.Room()
+
+		# TODO: Create NPC class.
+		zom0 = {"name": "zomney"}
 
 		north.name = "North"
 		north.desc = "The north room."
@@ -94,7 +126,10 @@ class World:
 		center.exits.append({"room": east, "localName": "East"})
 		center.exits.append({"room": west, "localName": "West"})
 
-		north.items.append("item")
+		north.items.append(items.createAxe())
+		west.items.append(items.createHealthPotion())
+		east.items.append(items.createHealthPotion())
+		south.npcs.append(zom0)
 
 		self.rooms.append(north)
 		self.rooms.append(south)
