@@ -84,7 +84,6 @@ class World:
 
 	def displayList(self, myList, name):
 		i = 1
-		numExits = len(self.curRoom.exits)
 
 		for element in myList:
 			if i < len(myList):
@@ -92,6 +91,15 @@ class World:
 			else:
 				print(element[name] + ".")
 			i += 1
+
+	def getItem(self, itemName):
+		for item in self.curRoom.items:
+			if item['name'].lower() == itemName.lower():
+				return item
+		return None
+
+	def removeItem(self, item):
+		self.curRoom.items.remove(item)
 
 	def createRooms(self):
 		north = self.Room()
