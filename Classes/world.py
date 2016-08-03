@@ -1,5 +1,7 @@
 
 from __future__ import print_function
+import string
+
 import items
 
 class World:
@@ -94,7 +96,7 @@ class World:
 
 	def getItem(self, itemName):
 		for item in self.curRoom.items:
-			if item['name'].lower() == itemName.lower():
+			if string.find(item['name'], itemName, 0) != -1:
 				return item
 		return None
 

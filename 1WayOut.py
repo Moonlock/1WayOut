@@ -10,13 +10,15 @@ player_obj = player.Player()
 def printHelp():
 	print("Commands:")
 	print("	go	[exit]")
-	print("	get	[item]")
 	print("	l/look")
 	print("    *	l/look	[item/npc]")
+	print("	get	[item]")
+	print("	i/inv")
+	print("	use [item]")
 	print("    *	wield	[weapon]")
+	print("    *	status")	# Health, weapon, stats, followers
 	print("    *	join	[person]")
 	print("    *	k/kill	[npc]")
-	print("    *	i/inv")
 	print("	m/map")
 	print("	quit")
 	print("	help")
@@ -42,6 +44,8 @@ def parseCommand(command, arg=""):
 	elif (command == "l") or (command == "look"):
 		if arg == "":
 			world_obj.displayRoom()
+		#else:
+		#	world_obj.look(arg)
 	elif (command == "m") or (command == "map"):
 		world_obj.printMap()
 
@@ -49,6 +53,8 @@ def parseCommand(command, arg=""):
 		player_obj.getItem(arg, world_obj)
 	elif (command == "i") or (command == "inv"):
 		player_obj.displayInventory()
+	elif command == "use":
+		player_obj.use(arg)
 
 	elif command == "help":
 		printHelp()

@@ -1,4 +1,5 @@
 from __future__ import print_function
+import string
 
 class Player:
 
@@ -16,6 +17,7 @@ class Player:
 		item = world.getItem(itemName)
 		if item != None:
 			self.items.append(item)
+			self.items.sort()
 			world.removeItem(item)
 		else:
 			print("That is not here.")
@@ -29,3 +31,22 @@ class Player:
 			else:
 				print(item["name"] + ".")
 			i += 1
+
+	def use(self, itemName):
+		for item in self.items:
+			if string.find(item['name'], itemName, 0) != -1:
+				if item["type"] == "healing":
+					self.items.remove(item)
+					return
+				else:
+					print("You can't use that, dick.")
+					return
+			
+		print("Hey asshole, you don't have that.")
+		return
+
+
+
+
+
+
