@@ -50,11 +50,19 @@ def parseCommand(command, arg=""):
 		world_obj.printMap()
 
 	elif command == "get":
-		player_obj.getItem(arg, world_obj)
+		if arg == "":
+			print("Get what?")
+		else:
+			player_obj.getItem(arg, world_obj)
+	
 	elif (command == "i") or (command == "inv"):
 		player_obj.displayInventory()
+	
 	elif command == "use":
-		player_obj.use(arg)
+		if arg == "":
+			print("Use what?")
+		else:
+			player_obj.use(arg)
 
 	elif command == "help":
 		printHelp()
