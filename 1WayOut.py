@@ -1,54 +1,52 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 import sys
 sys.path.append('Classes')
 import world
 import player
+import combat
 
-world_obj = world.World()
-player_obj = player.Player()
+p1 = player.Player()
+gameWorld = world.World()
 
-def printHelp():
-	print("Commands:")
-	print("	go	[exit]")
-	print("    *	get	[item]")
-	print("	l/look")
-	print("    *	l/look	[item/npc]")
-	print("    *	wield	[weapon]")
-	print("    *	join	[person]")
-	print("    *	k/kill	[npc]")
-	print("    *	i/inv")
-	print("	m/map")
-	print("	quit")
-	print("	help")
-	print("")
-	print("  * Not yet implemented.")
-	print("")
+print("Survive the zombie horde.")
+print('')
 
-def parseCommand(command, arg=""):
-	if command == "go":
-		world_obj.move(arg)
-	elif (command == "l") or (command == "look"):
-		if arg == "":
-			world_obj.displayRoom()
-	elif (command == "m") or (command == "map"):
-		world_obj.printMap()
-	elif command == "help":
-		printHelp()
-	elif command == "quit":
-		print("Goodbye!")
-		return 1
+i = True
+while (i == True):
+	
+	if gameWorld.curRoom.npcs != []:
+		if gameWorld.curRoom.npcs[0].stats.name == "Zombie":
+			combat.Combat(p1,gameWorld.curRoom.npcs[0])
+
+	usercmd = raw_input('')
+	if usercmd == 'n':
+		gameWorld.move('North')
+	elif usercmd == 's':
+		gameWorld.move('South')
+	elif usercmd == 'w':
+		gameWorld.move('West')
+	elif usercmd == 'e':
+		gameWorld.move('East')
+	elif usercmd == 'c':
+		gameWorld.move('Center')
+	elif usercmd == 'map':
+		gameWorld.printMap()
+	elif usercmd == 'quit':
+		i = False
+	elif usercmd == 'help':
+		print('n - Go North.')
+		print('s - Go South.')
+		print('w - Go West.')
+		print('e - Go East.')
+		print('c - Go to the Center.')
+		print('map - Open game map.')
+		print('quit - Quit 1WayOut.')
 	else:
-		print("...")
+		print("That is not a valid command.")
+		print("Type 'help' for help.")
 
 
-while(True):
-	command = raw_input(">> ").split(" ")
-	if len(command) == 2:
-		rv = parseCommand(command[0], command[1])
-		if rv == 1:
-			exit()
-	else:
-		rv = parseCommand(command[0])
-		if rv == 1:
-			exit()
+
+
+
 
