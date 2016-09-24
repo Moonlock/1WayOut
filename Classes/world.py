@@ -103,6 +103,23 @@ class World:
 	def removeItem(self, item):
 		self.curRoom.items.remove(item)
 
+	def startFight(self, player, target):
+		opponent = self.getNpc(target)
+		if opponent != None:
+			print("You attack " + opponent['name'] + ".")
+			self.fight(player, opponent)
+		else:
+			print("That is not here.")
+
+	def fight(self, attacker, defender):
+		print("To be implemented.")
+
+	def getNpc(self, npcName):
+		for npc in self.curRoom.npcs:
+			if string.find(npc['name'], npcName, 0) != -1:
+				return npc
+		return None
+
 	def createRooms(self):
 		north = self.Room()
 		south = self.Room()

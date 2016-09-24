@@ -39,11 +39,12 @@ class Player:
 					self.items.remove(item)
 					return
 				else:
-					print("You can't use that, dick.")
+					print("You can't use that.")
 					return
 			
-		print("Hey asshole, you don't have that.")
+		print("You don't have that.")
 		return
+
 
 
 

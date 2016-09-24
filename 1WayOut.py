@@ -11,14 +11,14 @@ def printHelp():
 	print("Commands:")
 	print("	go	[exit]")
 	print("	l/look")
-	print("    *	l/look	[item/npc]")
+	print("    *	l/look		[item/npc]")
 	print("	get	[item]")
 	print("	i/inv")
 	print("	use [item]")
-	print("    *	wield	[weapon]")
+	print("    *	wield		[weapon]")
 	print("    *	status")	# Health, weapon, stats, followers
-	print("    *	join	[person]")
-	print("    *	k/kill	[npc]")
+	print("    *	join		[person]")
+	print("    *	a/attack	[npc]")
 	print("	m/map")
 	print("	quit")
 	print("	help")
@@ -48,6 +48,12 @@ def parseCommand(command, arg=""):
 		#	world_obj.look(arg)
 	elif (command == "m") or (command == "map"):
 		world_obj.printMap()
+
+	elif (command == "a") or (command == "attack") or (command == "k"):
+		if arg == "":
+			print("Attack what?")
+		else:
+			world_obj.startFight(player_obj, arg)
 
 	elif command == "get":
 		if arg == "":
