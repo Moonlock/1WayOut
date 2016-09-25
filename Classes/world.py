@@ -3,6 +3,7 @@ from __future__ import print_function
 import string
 
 import items
+import zombie
 
 class World:
 
@@ -80,7 +81,8 @@ class World:
 
 		if self.curRoom.npcs != []:
 			print("You see: ", end="")
-			self.displayList(self.curRoom.npcs, "name")
+			#self.displayList(self.curRoom.npcs, "name")
+			print(self.curRoom.npcs[0].name)
 
 		print("")
 
@@ -103,20 +105,28 @@ class World:
 	def removeItem(self, item):
 		self.curRoom.items.remove(item)
 
+	def removeNpc(self, npc):
+		self.curRoom.npcs.remove(npc)
+
 	def startFight(self, player, target):
 		opponent = self.getNpc(target)
 		if opponent != None:
-			print("You attack " + opponent['name'] + ".")
+			print("You attack " + opponent.name + ".")
 			self.fight(player, opponent)
 		else:
 			print("That is not here.")
 
 	def fight(self, attacker, defender):
-		print("To be implemented.")
+		while (attacker.health > 0) and (defender.health > 0):
+			attacker.takeTurn(defender)
+			if defender.health > 0:
+				defender.takeTurn(attacker)
+			else:
+				self.removeNpc(defender)
 
 	def getNpc(self, npcName):
 		for npc in self.curRoom.npcs:
-			if string.find(npc['name'], npcName, 0) != -1:
+			if string.find(npc.name, npcName, 0) != -1:
 				return npc
 		return None
 
@@ -127,8 +137,7 @@ class World:
 		west = self.Room()
 		center = self.Room()
 
-		# TODO: Create NPC class.
-		zom0 = {"name": "zomney"}
+		zom = zombie.Zombie("zombie")
 
 		north.name = "North"
 		north.desc = "The north room."
@@ -156,7 +165,7 @@ class World:
 		north.items.append(items.createAxe())
 		west.items.append(items.createHealthPotion())
 		east.items.append(items.createHealthPotion())
-		south.npcs.append(zom0)
+		south.npcs.append(zom)
 
 		self.rooms.append(north)
 		self.rooms.append(south)

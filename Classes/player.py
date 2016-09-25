@@ -12,6 +12,8 @@ class Player:
 		print("")
 
 		self.items = []
+		self.health = 20
+		self.strength = 2
 
 	def getItem(self, itemName, world):
 		item = world.getItem(itemName)
@@ -45,6 +47,32 @@ class Player:
 		print("You don't have that.")
 		return
 
+	def takeTurn(self, opponent):
+		print("OPTIONS:")
+		print("	Attack")
+		print("	Run")
+
+		command = raw_input(">> ")
+		if (command == "a") or (command == "attack"):
+			self.attack(opponent)
+		elif command == "run":
+			print("This hasn't been implemented yet.")
+		else:
+			print("That is not an option.")
+
+	def attack(self, opponent):
+		print("You hit " + opponent.name + " for " + str(self.strength) + " damage.")
+		opponent.takeDamage(self.strength)
+
+	def takeDamage(self, damage):
+		self.health -= damage
+		print("You are hit for " + str(damage) + " damage.")
+		if self.health <= 0:
+			self.die()
+
+	def die(self):
+		print("You have died.")
+		exit()
 
 
 
