@@ -1,6 +1,7 @@
 
 from __future__ import print_function
 import string
+import random
 
 import items
 import zombie
@@ -17,6 +18,7 @@ class World:
 
 	def __init__(self):
 		self.rooms = []
+		self.remainingZombies = 2
 		self.createRooms()
 
 	def printMap(self):
@@ -96,9 +98,22 @@ class World:
 				print(element[name] + ".")
 			i += 1
 
+	def look(self, targetName, player):
+		target = self.getNpc(targetName)
+		if target != None:
+			print(target.desc)
+			return
+
+		target = self.getItem(targetName)
+		if target != None:
+			print(target['desc'])
+			return
+
+		player.look(targetName)
+
 	def getItem(self, itemName):
 		for item in self.curRoom.items:
-			if string.find(item['name'], itemName, 0) != -1:
+			if string.find(item['name'], itemName) == 0:
 				return item
 		return None
 
@@ -112,23 +127,39 @@ class World:
 		opponent = self.getNpc(target)
 		if opponent != None:
 			print("You attack " + opponent.name + ".")
+			self.fightInProgress = True
 			self.fight(player, opponent)
 		else:
 			print("That is not here.")
 
+	def flee(self):
+		print("You run like a chicken.")
+		self.curRoom = random.choice(self.curRoom.exits)['room']
+		self.fightInProgress = False
+
 	def fight(self, attacker, defender):
-		while (attacker.health > 0) and (defender.health > 0):
-			attacker.takeTurn(defender)
-			if defender.health > 0:
+		while (self.fightInProgress == True):
+			if attacker.isAlive():
+				attacker.takeTurn(defender)
+			else:
+				break
+			if defender.isAlive():
 				defender.takeTurn(attacker)
 			else:
 				self.removeNpc(defender)
+				break
+		self.fightInProgress = False
 
 	def getNpc(self, npcName):
 		for npc in self.curRoom.npcs:
-			if string.find(npc.name, npcName, 0) != -1:
+			if string.find(npc.name, npcName) == 0:
 				return npc
 		return None
+
+	def victoryCheck(self):
+		if self.remainingZombies == 0:
+			print("You win!")
+			exit()
 
 	def createRooms(self):
 		north = self.Room()
@@ -137,7 +168,8 @@ class World:
 		west = self.Room()
 		center = self.Room()
 
-		zom = zombie.Zombie("zombie")
+		zom0 = zombie.Zombie("zombie", 5, 1, "Brains....", self)
+		zom1 = zombie.Zombie("super zombie", 20, 3, "He looks pretty tough.", self)
 
 		north.name = "North"
 		north.desc = "The north room."
@@ -162,10 +194,10 @@ class World:
 		center.exits.append({"room": east, "localName": "East"})
 		center.exits.append({"room": west, "localName": "West"})
 
-		north.items.append(items.createAxe())
-		west.items.append(items.createHealthPotion())
+		west.items.append(items.createAxe())
 		east.items.append(items.createHealthPotion())
-		south.npcs.append(zom)
+		north.npcs.append(zom0)
+		south.npcs.append(zom1)
 
 		self.rooms.append(north)
 		self.rooms.append(south)
