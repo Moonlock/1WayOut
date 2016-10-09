@@ -3,6 +3,10 @@ import sys
 import world
 import player
 
+# Fix input() vs raw_input() mess
+try: input = raw_input
+except NameError: pass
+
 world_obj = world.World()
 player_obj = player.Player(world_obj)
 
@@ -10,20 +14,16 @@ def printHelp():
 	print("Commands:")
 	print("	go	[exit]")
 	print("	l/look")
-	print("	l/look		[item/npc]")
+	print("	l/look	[item/npc]")
 	print("	get	[item]")
 	print("	i/inv")
-	print("	use [item]")
-	print("	wield		[weapon]")
-	print("	status")	# Health, weapon, stats, followers
-	print("    *	join		[person]")
-	print("	a/attack	[npc]")
+	print("	use 	[item]")
+	print("	wield	[weapon]")
+	print("	status")
+	print("	a/attack[npc]")
 	print("	m/map")
 	print("	quit")
 	print("	help")
-	print("")
-	print("  * Not yet implemented.")
-	print("")
 
 def parseCommand(command, arg=""):
 	if command == "go":
@@ -44,13 +44,13 @@ def parseCommand(command, arg=""):
 		if arg == "":
 			world_obj.displayRoom()
 		else:
-			world_obj.look(arg, player_obj)		#NPC, ground, inv, wielded
+			world_obj.look(arg, player_obj)
 	elif (command == "m") or (command == "map"):
 		world_obj.printMap()
 	elif (command == "stat") or (command == "status"):
 		player_obj.status()
 
-	elif (command == "a") or (command == "attack") or (command == "k"):
+	elif (command == "a") or (command == "attack"):
 		if arg == "":
 			print("Attack what?")
 		else:
@@ -86,15 +86,16 @@ def parseCommand(command, arg=""):
 
 
 while(True):
-	command = raw_input(str(player_obj.health) + "> ").split(" ")
+	print("")
+
+	command = input(player_obj.getPrompt()).split(" ")
 	if len(command) == 2:
 		rv = parseCommand(command[0], command[1])
-		if rv == 1:
-			exit()
 	else:
 		rv = parseCommand(command[0])
-		if rv == 1:
-			exit()
+	
+	if rv == 1:
+		exit()
 
 	world_obj.victoryCheck()
 

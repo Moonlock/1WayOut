@@ -1,16 +1,20 @@
 from __future__ import print_function
 import string
 
+from items import Weapon, Healing
+
+# Fix input() vs raw_input() mess
+try: input = raw_input
+except NameError: pass
+
 class Player:
 
 	def __init__(self, world):
 		self.world = world
-		self.name = raw_input("Please enter your name: ")	
-						# Incompatible with Python 3.
+		self.name = input("Please enter your name: ")
 		print("")
 		print("Greetings, " + self.name + "!")
 		print("Type 'help' for help.")
-		print("")
 
 		self.items = []
 		self.wielded = None
@@ -18,94 +22,100 @@ class Player:
 		self.maxHealth = 20
 		self.strength = 1
 
+	def getPrompt(self):
+		return "%02d" % self.health + "/" + str(self.maxHealth) + " > "
+
 	def status(self):
 		print("")
 		print(self.name)
 		print("\tHealth: " + str(self.health) + "/" + str(self.maxHealth))
 		print("\tStrength: " + str(self.strength))
-		print("\tWielded: " + ("None" if (self.wielded == None) else str(self.wielded['name'])))
-		print("")
+		print("\tWielded: " + ("None" if (self.wielded == None) else str(self.wielded.name)))
 
-	def look(self, itemName):
-		item = self.getItem(itemName)
-		if item != None:
-			print(item['desc'])
+	def displayInventory(self):
+		if not self.items:
+			print("You have no items.")
 			return
 
-		if self.wielded != None:
-			if string.find(self.wielded['name'], itemName) == 0:
-				print(self.wielded['desc'])
-				return
-
-		print("That is not here.")
-
-	def getItem(self, itemName):
-		for item in self.items:
-			if string.find(item['name'], itemName) == 0:
-				return item
-		return None
+		print("You have: ", end="")
+		for item in self.items[:-1]:
+			print(item.name + ", ", end="")
+		print(self.items[-1].name + ".")
 
 	def pickUpItem(self, itemName):
 		item = self.world.getItem(itemName)
 		if item != None:
 			self.items.append(item)
-			self.items = sorted(self.items, key=lambda k: k['name'])
+			self.items = sorted(self.items, key=lambda k: k.name)
 			self.world.removeItem(item)
+			print("You pick up the " + item.name + ".")
 		else:
 			print("That is not here.")
 
-	def displayInventory(self):
-		i = 1
-		
-		for item in self.items:
-			if i < len(self.items):
-				print(item["name"] + ", ", end="")
-			else:
-				print(item["name"] + ".")
-			i += 1
-
 	def use(self, itemName):
-		for item in self.items:
-			if string.find(item['name'], itemName) == 0:
-				if item["type"] == "healing":
-					self.items.remove(item)
-					self.health += item['value']
-					if self.health > self.maxHealth:
-						self.health = self.maxHealth
-					print("The " + item['name'] + " recovers " + str(item['value']) + " health.")
-					return
-				else:
-					print("You can't use that.")
-					return
-			
-		print("You don't have that.")
-		return
+		item = self.getItem(itemName)
+		if item == None:
+			print("You don't have that.")
+			return
+
+		item.use(self)
+
+	def recoverHealth(self, health):
+		self.health += health
+		if self.health > self.maxHealth:
+			self.health = self.maxHealth
 
 	def wield(self, weaponName):
-		for weapon in self.items:
-			if string.find(weapon['name'], weaponName) == 0:
-				if weapon["type"] == "weapon":
-					if self.wielded != None:
-						print("You're already wielding something.")
-						return
-					self.items.remove(weapon)
-					self.wielded = weapon
-					self.strength += weapon['value']
-					print("You wield the " + weapon['name'] + ".")
-					return
-				else:
-					print("You can't wield that.")
-					return
-			
-		print("You don't have that.")
-		return
+		weapon = self.getItem(weaponName)
+		if weapon == None:
+			print("You don't have that.")
+			return
+	
+		if isinstance(weapon, Weapon):
+			if self.wielded != None:
+				print("You're already wielding something.")
+				return
+			self.items.remove(weapon)
+			self.wielded = weapon
+			self.strength += weapon.damage
+			print("You wield the " + weapon.name + ".")
+			return
+		else:
+			print("You can't wield that.")
+			return
 
+	def getItem(self, itemName):
+		for item in self.items:
+			if string.find(item.name, itemName) == 0:
+				return item
+		return None
+
+	def removeItem(self, item):
+		self.items.remove(item)
+
+	def lookWielded(self, weaponName):
+		if self.wielded == None:
+			return False
+
+		if string.find(self.wielded.name, weaponName) == 0:
+			self.wielded.printDescription()
+			return True
+		return False
+
+	def lookInventory(self, itemName):
+		item = self.getItem(itemName)
+		if item != None:
+			item.printDescription()
+			return True
+		return False
+			
 	def takeTurn(self, opponent):
 		print("OPTIONS:")
 		print("	Attack")
 		print("	Run")
+		print("")
 
-		command = raw_input(str(self.health) + "> ")
+		command = input(self.getPrompt())
 		if (command == "a") or (command == "attack"):
 			self.attack(opponent)
 		elif command == "run":
@@ -130,6 +140,3 @@ class Player:
 
 	def isAlive(self):
 		return self.health > 0
-
-
-

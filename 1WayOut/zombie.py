@@ -4,7 +4,7 @@ class Zombie:
 		self.name = name
 		self.health = health
 		self.strength = strength
-		self.desc = description
+		self.description = description
 		self.world = world
 
 	def takeTurn(self, opponent):
@@ -20,7 +20,11 @@ class Zombie:
 
 	def die(self):
 		self.world.remainingZombies -= 1
+		self.world.removeNpc(self)
 		print(self.name + " has died.")
 
 	def isAlive(self):
 		return self.health > 0
+
+	def printDescription(self):
+		print(self.description)

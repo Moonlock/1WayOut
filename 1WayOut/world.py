@@ -53,17 +53,8 @@ class World:
 		print("	        |___|			")
 
 	def move(self, newRoom):
-		if newRoom.lower() == "n":
-			newRoom = "North"
-		elif newRoom.lower() == "s":
-			newRoom = "South"
-		elif newRoom.lower() == "e":
-			newRoom = "East"
-		elif newRoom.lower() == "s":
-			newRoom = "South"
-
 		for exit in self.curRoom.exits:
-			if exit['localName'].lower() == newRoom.lower():
+			if string.find(exit['localName'].lower(), newRoom.lower()) == 0:
 				self.curRoom = exit['room']
 				self.displayRoom()
 				return
@@ -74,68 +65,88 @@ class World:
 		print(self.curRoom.name)
 		print(self.curRoom.desc)
 
+		self.displayExits()
+		self.displayItems()
+		self.displayNpcs()
+
+	def displayExits(self):
 		print("Exits: ", end="")
-		self.displayList(self.curRoom.exits, "localName")
+		for exit in self.curRoom.exits[:-1]:
+			print(exit['localName'] + ", ", end="")
+		print(self.curRoom.exits[-1]['localName'] + ".")
 
-		if self.curRoom.items != []:
-			print("Items: ", end="")
-			self.displayList(self.curRoom.items, "name")
+	def displayItems(self):
+		if not self.curRoom.items:
+			return
 
-		if self.curRoom.npcs != []:
-			print("You see: ", end="")
-			#self.displayList(self.curRoom.npcs, "name")
-			print(self.curRoom.npcs[0].name)
+		print("Items: ", end="")
+		self.displayList(self.curRoom.items)
 
-		print("")
+	def displayNpcs(self):
+		if not self.curRoom.npcs:
+			return
 
-	def displayList(self, myList, name):
-		i = 1
+		print("You see: ", end="")
+		self.displayList(self.curRoom.npcs)
 
-		for element in myList:
-			if i < len(myList):
-				print(element[name] + ", ", end="")
-			else:
-				print(element[name] + ".")
-			i += 1
+	def displayList(self, myList):
+		for element in myList[:-1]:
+			print(element.name + ", ", end="")
+		print(myList[-1].name + ".")
 
 	def look(self, targetName, player):
-		target = self.getNpc(targetName)
-		if target != None:
-			print(target.desc)
+		if self.lookNpc(targetName) == True:
+			return
+		if self.lookGround(targetName) == True:
+			return
+		if player.lookInventory(targetName) == True:
+			return
+		if player.lookWielded(targetName) == True:
 			return
 
-		target = self.getItem(targetName)
-		if target != None:
-			print(target['desc'])
-			return
+		print("That is not here.")
 
-		player.look(targetName)
+	def lookNpc(self, npcName):
+		npc = self.getNpc(npcName)
+		if npc != None:
+			npc.printDescription()
+			return True
+		return False
+
+	def lookGround(self, itemName):
+		item = self.getItem(itemName)
+		if item != None:
+			item.printDescription()
+			return True
+		return False
 
 	def getItem(self, itemName):
 		for item in self.curRoom.items:
-			if string.find(item['name'], itemName) == 0:
+			if string.find(item.name, itemName) == 0:
 				return item
 		return None
 
 	def removeItem(self, item):
 		self.curRoom.items.remove(item)
 
+	def getNpc(self, npcName):
+		for npc in self.curRoom.npcs:
+			if string.find(npc.name, npcName) == 0:
+				return npc
+		return None
+
 	def removeNpc(self, npc):
 		self.curRoom.npcs.remove(npc)
 
 	def startFight(self, player, target):
 		opponent = self.getNpc(target)
-		if opponent != None:
-			print("You attack " + opponent.name + ".")
-			self.fightInProgress = True
-			self.fight(player, opponent)
-		else:
+		if opponent == None:
 			print("That is not here.")
+			return
 
-	def flee(self):
-		print("You run like a chicken.")
-		self.curRoom = random.choice(self.curRoom.exits)['room']
-		self.fightInProgress = False
+		print("You attack " + opponent.name + ".")
+		self.fightInProgress = True
+		self.fight(player, opponent)
 
 	def fight(self, attacker, defender):
 		while (self.fightInProgress == True):
@@ -146,15 +157,14 @@ class World:
 			if defender.isAlive():
 				defender.takeTurn(attacker)
 			else:
-				self.removeNpc(defender)
 				break
+			print("")
 		self.fightInProgress = False
 
-	def getNpc(self, npcName):
-		for npc in self.curRoom.npcs:
-			if string.find(npc.name, npcName) == 0:
-				return npc
-		return None
+	def flee(self):
+		print("You run like a chicken.")
+		self.curRoom = random.choice(self.curRoom.exits)['room']
+		self.fightInProgress = False
 
 	def victoryCheck(self):
 		if self.remainingZombies == 0:
@@ -194,8 +204,8 @@ class World:
 		center.exits.append({"room": east, "localName": "East"})
 		center.exits.append({"room": west, "localName": "West"})
 
-		west.items.append(items.createAxe())
-		east.items.append(items.createHealthPotion())
+		west.items.append(items.Axe())
+		east.items.append(items.HealthPotion())
 		north.npcs.append(zom0)
 		south.npcs.append(zom1)
 
@@ -206,6 +216,3 @@ class World:
 		self.rooms.append(center)
 
 		self.curRoom = center
-
-					
-
