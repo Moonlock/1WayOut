@@ -15,10 +15,12 @@ def printHelp():
 	print("	go	[exit]")
 	print("	l/look")
 	print("	l/look	[item/npc]")
-	print("	get	[item]")
+	print("	get		[item]")
+	print("	drop 	[item]")
 	print("	i/inv")
 	print("	use 	[item]")
 	print("	wield	[weapon]")
+	print(" unequip	[weapon]")
 	print("	status")
 	print("	a/attack[npc]")
 	print("	m/map")
@@ -61,7 +63,13 @@ def parseCommand(command, arg=""):
 			print("Get what?")
 		else:
 			player_obj.pickUpItem(arg)
-	
+
+	elif command =="drop":
+		if arg == "":
+			print "Drop what?"
+		else:
+			player_obj.dropItem(arg)
+
 	elif (command == "i") or (command == "inv"):
 		player_obj.displayInventory()
 	
@@ -75,6 +83,13 @@ def parseCommand(command, arg=""):
 			print("Wield what?")
 		else:
 			player_obj.wield(arg)
+
+	elif (command == "unequip") or (command == "uneq"):
+		if arg == "":
+			print("Unequip what?")
+		else:
+			player_obj.unequip(arg)
+
 
 	elif command == "help":
 		printHelp()

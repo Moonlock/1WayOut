@@ -129,6 +129,9 @@ class World:
 	def removeItem(self, item):
 		self.curRoom.items.remove(item)
 
+	def addItem(self, item):
+		self.curRoom.items.append(item)
+
 	def getNpc(self, npcName):
 		for npc in self.curRoom.npcs:
 			if string.find(npc.name, npcName) == 0:

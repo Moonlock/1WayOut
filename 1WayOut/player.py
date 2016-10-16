@@ -45,19 +45,21 @@ class Player:
 	def pickUpItem(self, itemName):
 		item = self.world.getItem(itemName)
 		if item != None:
-			self.items.append(item)
-			self.items = sorted(self.items, key=lambda k: k.name)
+			self.addItem(item)
 			self.world.removeItem(item)
 			print("You pick up the " + item.name + ".")
 		else:
 			print("That is not here.")
+
+	def addItem(self, item):
+		self.items.append(item)
+		self.items = sorted(self.items, key=lambda k: k.name)
 
 	def use(self, itemName):
 		item = self.getItem(itemName)
 		if item == None:
 			print("You don't have that.")
 			return
-
 		item.use(self)
 
 	def recoverHealth(self, health):
@@ -93,10 +95,41 @@ class Player:
 	def removeItem(self, item):
 		self.items.remove(item)
 
+	def dropItem(self, itemName):
+		item = self.getItem(itemName)
+		if item == None:
+			self.dropWeapon(itemName)
+			return
+		self.removeItem(item)
+		self.world.addItem(item)
+		print("You dropped the " + item.name + ".")
+
+	def dropWeapon(self, weaponName):
+		item = self.wielded
+		if item == None:
+			print("You don't have that.")
+			return
+		if string.find(item.name, weaponName) == 0:
+			self.wielded = None
+			self.world.addItem(item)
+			print("You dropped the " + item.name + ".")
+			return
+		print("You dont have that.")
+
+	def unequip(self, weaponName):
+		if self.wielded == None:
+			print("You don't have that equiped.")
+			return
+		if string.find(self.wielded.name, weaponName) == 0:
+			self.addItem(self.wielded)
+			self.wielded = None
+			return
+		print("You dont have that equiped.")
+
+
 	def lookWielded(self, weaponName):
 		if self.wielded == None:
 			return False
-
 		if string.find(self.wielded.name, weaponName) == 0:
 			self.wielded.printDescription()
 			return True
