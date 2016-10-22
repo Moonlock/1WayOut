@@ -1,4 +1,3 @@
-
 from __future__ import print_function
 import string
 import random
@@ -145,26 +144,26 @@ class World:
 			return
 
 		print("You attack " + opponent.name + ".")
-		self.fightInProgress = True
+		opponent.becomeHostile()
 		self.fight(player, opponent)
 
 	def fight(self, attacker, defender):
-		while (self.fightInProgress == True):
-			if attacker.isAlive():
-				attacker.takeTurn(defender)
-			else:
-				break
-			if defender.isAlive():
+		while self.fightIsOngoing(attacker):
+			attacker.takeTurn(defender)
+			if self.fightIsOngoing(attacker):
 				defender.takeTurn(attacker)
-			else:
-				break
 			print("")
-		self.fightInProgress = False
+
+	def fightIsOngoing(self, player):
+		hostilesExist = False
+		for npc in self.curRoom.npcs:
+			if npc.isHostile:
+				hostilesExist = True
+		return player.isAlive() and hostilesExist
 
 	def flee(self):
 		print("You run like a chicken.")
 		self.curRoom = random.choice(self.curRoom.exits)['room']
-		self.fightInProgress = False
 
 	def victoryCheck(self):
 		if self.remainingZombies == 0:

@@ -4,6 +4,7 @@ class Zombie:
 		self.name = name
 		self.health = health
 		self.strength = strength
+		self.hostile = False
 		self.description = description
 		self.world = world
 
@@ -20,11 +21,19 @@ class Zombie:
 
 	def die(self):
 		self.world.remainingZombies -= 1
+		self.hostile = False
 		self.world.removeNpc(self)
 		print(self.name + " has died.")
+
+	def becomeHostile(self):
+		self.hostile = True
+
+	def isHostile(self):
+		return self.isHostile
 
 	def isAlive(self):
 		return self.health > 0
 
 	def printDescription(self):
 		print(self.description)
+

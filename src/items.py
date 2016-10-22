@@ -3,19 +3,27 @@ class Item(object):
 		self.name = name
 		self.description = description
 
-	def use(self, player):
+	def useOn(self, player):
 		raise NotImplementedError(str(type(self)) + " does not implement use().")
+
+	def equipTo(self, player):
+		raise NotImplementedError(str(type(self)) + " does not implement equipTo().")
 
 	def printDescription(self):
 		print(self.description)
+
 
 class Weapon(Item):
 	def __init__(self, name, damage, description):
 		super(Weapon, self).__init__(name, description)
 		self.damage = damage
 
-	def use(self, player):
+	def useOn(self, player):
 		print("You can't use that.")
+
+	def equipTo(self, player):
+		player.unequipWeapon()
+		player.wieldWeapon(self)
 
 	def printDescription(self):
 		print(self.description)
@@ -26,10 +34,13 @@ class Healing(Item):
 		super(Healing, self).__init__(name, description)
 		self.health = health
 
-	def use(self, player):
+	def useOn(self, player):
 		player.removeItem(self)
 		player.recoverHealth(self.health)
 		print("The " + self.name + " recovers " + str(self.health) + " health.")
+
+	def equipTo(self, player):
+		print("That is not a weapon.")
 		
 	def printDescription(self):
 		print(self.description)

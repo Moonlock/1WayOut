@@ -9,12 +9,9 @@ except NameError: pass
 
 class Player:
 
-	def __init__(self, world):
+	def __init__(self, world, name):
 		self.world = world
-		self.name = input("Please enter your name: ")
-		print("")
-		print("Greetings, " + self.name + "!")
-		print("Type 'help' for help.")
+		self.name = name
 
 		self.items = []
 		self.wielded = None
@@ -44,7 +41,7 @@ class Player:
 
 	def pickUpItem(self, itemName):
 		item = self.world.getItem(itemName)
-		if item != None:
+		if item is not None:
 			self.items.append(item)
 			self.items = sorted(self.items, key=lambda k: k.name)
 			self.world.removeItem(item)
@@ -54,35 +51,41 @@ class Player:
 
 	def use(self, itemName):
 		item = self.getItem(itemName)
-		if item == None:
+		if item is None:
 			print("You don't have that.")
 			return
 
-		item.use(self)
+		item.useOn(self)
 
 	def recoverHealth(self, health):
 		self.health += health
 		if self.health > self.maxHealth:
 			self.health = self.maxHealth
 
+	# Attempt to wield an item that may not be a weapon.
 	def wield(self, weaponName):
 		weapon = self.getItem(weaponName)
-		if weapon == None:
+		if weapon is None:
 			print("You don't have that.")
 			return
 	
-		if isinstance(weapon, Weapon):
-			if self.wielded != None:
-				print("You're already wielding something.")
-				return
-			self.items.remove(weapon)
-			self.wielded = weapon
-			self.strength += weapon.damage
-			print("You wield the " + weapon.name + ".")
-			return
-		else:
-			print("You can't wield that.")
-			return
+		weapon.equipTo(self)
+
+	# Wield an item that is definately a weapon.
+	def wieldWeapon(self, weapon):
+		self.items.remove(weapon)
+		self.wielded = weapon
+		self.strength += weapon.damage
+		print("You wield the " + weapon.name + ".")
+
+	def unequipWeapon(self):
+		weapon = self.wielded
+
+		if weapon is not None:
+			print("You unequip the " + weapon.name + ".")
+			self.strength -= weapon.damage
+			self.items.append(weapon)
+			self.wielded = None
 
 	def getItem(self, itemName):
 		for item in self.items:
@@ -94,7 +97,7 @@ class Player:
 		self.items.remove(item)
 
 	def lookWielded(self, weaponName):
-		if self.wielded == None:
+		if self.wielded is None:
 			return False
 
 		if string.find(self.wielded.name, weaponName) == 0:
@@ -104,7 +107,7 @@ class Player:
 
 	def lookInventory(self, itemName):
 		item = self.getItem(itemName)
-		if item != None:
+		if item is not None:
 			item.printDescription()
 			return True
 		return False
@@ -119,6 +122,7 @@ class Player:
 		if (command == "a") or (command == "attack"):
 			self.attack(opponent)
 		elif command == "run":
+			opponent.takeTurn(self)
 			self.world.flee()
 		else:
 			print("That is not an option.")
