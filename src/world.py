@@ -4,6 +4,7 @@ import random
 
 import items
 import zombie
+from random import random
 
 class World:
 
@@ -176,6 +177,8 @@ class World:
 		east = self.Room()
 		west = self.Room()
 		center = self.Room()
+		wester = self.Room()
+		westest = self.Room()
 
 		zom0 = zombie.Zombie("zombie", 5, 1, "Brains....", self)
 		zom1 = zombie.Zombie("super zombie", 20, 3, "He looks pretty tough.", self)
@@ -195,6 +198,17 @@ class World:
 		west.name = "West"
 		west.desc = "The west room."
 		west.exits.append({"room": center, "localName": "East"})
+		west.exits.append({"room": wester, "localName": "West"})
+
+		wester.name = "Wester"
+		wester.desc = "The wester room."
+		wester.exits.append({"room": west, "localName": "East"})
+		wester.exits.append({"room": westest, "localName": "West"})
+
+		westest.name = "Westest"
+		westest.desc = "The westest room."
+		westest.exits.append({"room": wester, "localName": "East"})
+
 
 		center.name = "Center"
 		center.desc = "The center room."
@@ -203,10 +217,35 @@ class World:
 		center.exits.append({"room": east, "localName": "East"})
 		center.exits.append({"room": west, "localName": "West"})
 
-		west.items.append(items.Axe())
-		east.items.append(items.HealthPotion())
-		north.npcs.append(zom0)
-		south.npcs.append(zom1)
+
+		rand = random()
+		print(rand)
+		if (int)(rand*2):
+			west.items.append(items.Axe())
+		else:
+			west.items.append(items.DumbAxe())
+
+		rond = random()
+		print(rond)
+		if (int)(rond*2):
+			east.items.append(items.HealthPotion())
+		else:
+			east.items.append(items.DeathJuice())
+
+		rind = random()
+		if (int)(rind*2):
+			north.npcs.append(zom0)
+		else: 
+			north.npcs.append(zom1)
+
+		rund = random()
+		if (int)(rund*2):
+			south.npcs.append(zom0)
+		else: 
+			south.npcs.append(zom1)
+
+		wester.items.append(items.HealthPotion())
+		westest.npcs.append(zom1)
 
 		self.rooms.append(north)
 		self.rooms.append(south)

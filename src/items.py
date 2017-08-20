@@ -51,6 +51,17 @@ class Axe(Weapon):
 	def __init__(self):
 		super(Axe, self).__init__("axe", 3, "A small axe useful for chopping up zombies.")
 
+class DumbAxe(Weapon):
+	def __init__(self):
+		super(DumbAxe, self).__init__("dumb axe", -2, "A small axe that inflicts pain.")
+
+class DeathJuice(Healing):
+	def __init__(self):
+		super(DeathJuice, self). __init__("death juice", -20, "A tasty potion that definitely won't kill you.")
+
 class HealthPotion(Healing):
 	def __init__(self):
 		super(HealthPotion, self).__init__("healing potion", 10, "A red potion that smells of cherries.")
+
+
+
