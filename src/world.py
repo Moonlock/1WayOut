@@ -6,6 +6,10 @@ import items
 import zombie
 from random import random
 
+# Fix input() vs raw_input() mess
+try: input = raw_input
+except NameError: pass
+
 class World:
 
 	class Room:
@@ -160,7 +164,8 @@ class World:
 		for npc in self.curRoom.npcs:
 			if npc.isHostile:
 				hostilesExist = True
-		return player.isAlive() and hostilesExist
+		player.checkAlive()
+		return hostilesExist
 
 	def flee(self):
 		print("You run like a chicken.")
@@ -169,7 +174,8 @@ class World:
 	def victoryCheck(self):
 		if self.remainingZombies == 0:
 			print("You win!")
-			exit()
+			return True
+		return False
 
 	def createRooms(self):
 		north = self.Room()

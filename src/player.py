@@ -71,7 +71,7 @@ class Player:
 	
 		weapon.equipTo(self)
 
-	# Wield an item that is definately a weapon.
+	# Wield an item that is definitely a weapon.
 	def wieldWeapon(self, weapon):
 		self.items.remove(weapon)
 		self.wielded = weapon
@@ -135,12 +135,12 @@ class Player:
 	def takeDamage(self, damage):
 		self.health -= damage
 		print("You are hit for " + str(damage) + " damage.")
-		if self.health <= 0:
-			self.die()
 
 	def die(self):
 		print("You have died.")
 		exit()
 
-	def isAlive(self):
-		return self.health > 0
+	def checkAlive(self):
+		if self.health > 0:
+			return True
+		self.die()
