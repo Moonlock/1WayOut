@@ -18,6 +18,7 @@ class Player:
 		self.health = 20
 		self.maxHealth = 20
 		self.strength = 1
+		self.incompetence = 0
 
 	def getPrompt(self):
 		return "%02d" % self.health + "/" + str(self.maxHealth) + " > "
@@ -76,6 +77,7 @@ class Player:
 		self.items.remove(weapon)
 		self.wielded = weapon
 		self.strength += weapon.damage
+		self.incompetence = weapon.incompetence
 		print("You wield the " + weapon.name + ".")
 
 	def unequipWeapon(self):
@@ -86,6 +88,7 @@ class Player:
 			self.strength -= weapon.damage
 			self.items.append(weapon)
 			self.wielded = None
+			self.incompetence = 0
 
 	def getItem(self, itemName):
 		for item in self.items:
@@ -131,6 +134,9 @@ class Player:
 	def attack(self, opponent):
 		print("You hit " + opponent.name + " for " + str(self.strength) + " damage.")
 		opponent.takeDamage(self.strength)
+		if (self.incompetence > 0):
+			print("You hurt yourself "+ str(self.incompetence) +" damage, dummy")
+			self.takeDamage(self.incompetence)
 
 	def takeDamage(self, damage):
 		self.health -= damage

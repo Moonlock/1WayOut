@@ -4,7 +4,6 @@ import random
 
 import items
 import zombie
-from random import random
 
 # Fix input() vs raw_input() mess
 try: input = raw_input
@@ -22,7 +21,7 @@ class World:
 
 	def __init__(self):
 		self.rooms = []
-		self.remainingZombies = 2
+		self.remainingZombies = 0
 		self.createRooms()
 
 	def printMap(self):
@@ -223,34 +222,35 @@ class World:
 		center.exits.append({"room": east, "localName": "East"})
 		center.exits.append({"room": west, "localName": "West"})
 
-
-		rand = random()
-		print(rand)
-		if (int)(rand*2):
+		if (int)(random.random()*2):
 			west.items.append(items.Axe())
 		else:
 			west.items.append(items.DumbAxe())
 
-		rond = random()
-		print(rond)
-		if (int)(rond*2):
+		if (int)(random.random()*2):
 			east.items.append(items.HealthPotion())
 		else:
 			east.items.append(items.DeathJuice())
 
-		rind = random()
-		if (int)(rind*2):
+		if (int)(random.random()*2):
 			north.npcs.append(zom0)
+			self.remainingZombies += 1
 		else: 
 			north.npcs.append(zom1)
+			self.remainingZombies += 1
 
-		rund = random()
-		if (int)(rund*2):
+		if (int)(random.random()*2):
 			south.npcs.append(zom0)
+			self.remainingZombies += 1
 		else: 
 			south.npcs.append(zom1)
+			self.remainingZombies += 1
 
-		wester.items.append(items.HealthPotion())
+		if (int)(random.random()*2):
+			wester.items.append(items.HammerTime())
+		else:
+			wester.items.append(items.Chainsaw())
+
 		westest.npcs.append(zom1)
 
 		self.rooms.append(north)
