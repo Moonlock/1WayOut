@@ -5,6 +5,10 @@ import random
 import items
 import zombie
 
+# Fix input() vs raw_input() mess
+try: input = raw_input
+except NameError: pass
+
 class World:
 
 	class Room:
@@ -17,7 +21,7 @@ class World:
 
 	def __init__(self):
 		self.rooms = []
-		self.remainingZombies = 2
+		self.remainingZombies = 0
 		self.createRooms()
 
 	def printMap(self):
@@ -159,7 +163,8 @@ class World:
 		for npc in self.curRoom.npcs:
 			if npc.isHostile:
 				hostilesExist = True
-		return player.isAlive() and hostilesExist
+		player.checkAlive()
+		return hostilesExist
 
 	def flee(self):
 		print("You run like a chicken.")
@@ -168,7 +173,8 @@ class World:
 	def victoryCheck(self):
 		if self.remainingZombies == 0:
 			print("You win!")
-			exit()
+			return True
+		return False
 
 	def createRooms(self):
 		north = self.Room()
@@ -176,6 +182,8 @@ class World:
 		east = self.Room()
 		west = self.Room()
 		center = self.Room()
+		wester = self.Room()
+		westest = self.Room()
 
 		zom0 = zombie.Zombie("zombie", 5, 1, "Brains....", self)
 		zom1 = zombie.Zombie("super zombie", 20, 3, "He looks pretty tough.", self)
@@ -195,6 +203,17 @@ class World:
 		west.name = "West"
 		west.desc = "The west room."
 		west.exits.append({"room": center, "localName": "East"})
+		west.exits.append({"room": wester, "localName": "West"})
+
+		wester.name = "Wester"
+		wester.desc = "The wester room."
+		wester.exits.append({"room": west, "localName": "East"})
+		wester.exits.append({"room": westest, "localName": "West"})
+
+		westest.name = "Westest"
+		westest.desc = "The westest room."
+		westest.exits.append({"room": wester, "localName": "East"})
+
 
 		center.name = "Center"
 		center.desc = "The center room."
@@ -203,10 +222,36 @@ class World:
 		center.exits.append({"room": east, "localName": "East"})
 		center.exits.append({"room": west, "localName": "West"})
 
-		west.items.append(items.Axe())
-		east.items.append(items.HealthPotion())
-		north.npcs.append(zom0)
-		south.npcs.append(zom1)
+		if (int)(random.random()*2):
+			west.items.append(items.Axe())
+		else:
+			west.items.append(items.DumbAxe())
+
+		if (int)(random.random()*2):
+			east.items.append(items.HealthPotion())
+		else:
+			east.items.append(items.DeathJuice())
+
+		if (int)(random.random()*2):
+			north.npcs.append(zom0)
+			self.remainingZombies += 1
+		else: 
+			north.npcs.append(zom1)
+			self.remainingZombies += 1
+
+		if (int)(random.random()*2):
+			south.npcs.append(zom0)
+			self.remainingZombies += 1
+		else: 
+			south.npcs.append(zom1)
+			self.remainingZombies += 1
+
+		if (int)(random.random()*2):
+			wester.items.append(items.HammerTime())
+		else:
+			wester.items.append(items.Chainsaw())
+
+		westest.npcs.append(zom1)
 
 		self.rooms.append(north)
 		self.rooms.append(south)

@@ -18,6 +18,7 @@ class Player:
 		self.health = 20
 		self.maxHealth = 20
 		self.strength = 1
+		self.incompetence = 0
 
 	def getPrompt(self):
 		return "%02d" % self.health + "/" + str(self.maxHealth) + " > "
@@ -30,6 +31,7 @@ class Player:
 		print("\tWielded: " + ("None" if (self.wielded == None) else str(self.wielded.name)))
 
 	def displayInventory(self):
+		print("")
 		if not self.items:
 			print("You have no items.")
 			return
@@ -53,9 +55,10 @@ class Player:
 		item = self.getItem(itemName)
 		if item is None:
 			print("You don't have that.")
-			return
+			return False
 
 		item.useOn(self)
+		return True
 
 	def recoverHealth(self, health):
 		self.health += health
@@ -71,11 +74,12 @@ class Player:
 	
 		weapon.equipTo(self)
 
-	# Wield an item that is definately a weapon.
+	# Wield an item that is definitely a weapon.
 	def wieldWeapon(self, weapon):
 		self.items.remove(weapon)
 		self.wielded = weapon
 		self.strength += weapon.damage
+		self.incompetence = weapon.incompetence
 		print("You wield the " + weapon.name + ".")
 
 	def unequipWeapon(self):
@@ -86,6 +90,7 @@ class Player:
 			self.strength -= weapon.damage
 			self.items.append(weapon)
 			self.wielded = None
+			self.incompetence = 0
 
 	def getItem(self, itemName):
 		for item in self.items:
@@ -113,34 +118,54 @@ class Player:
 		return False
 			
 	def takeTurn(self, opponent):
-		print("OPTIONS:")
-		print("	Attack")
-		print("	Run")
-		print("")
+		while True:
+			print("OPTIONS:")
+			print("	Attack")
+			print("	Item")
+			print("	Run")
+			print("")
 
-		command = input(self.getPrompt())
-		if (command == "a") or (command == "attack"):
-			self.attack(opponent)
-		elif command == "run":
-			opponent.takeTurn(self)
-			self.world.flee()
-		else:
-			print("That is not an option.")
-			self.takeTurn(opponent)
+			command = input(self.getPrompt()).lower()
+			if (string.find("attack", command) == 0):
+				self.attack(opponent)
+				return
+			if (string.find("item", command) == 0):
+				if self.useItemBattle():
+					return
+				else:
+					continue
+			if (string.find("run", command) == 0):
+				opponent.takeTurn(self)	#TODO: Likely change this
+				self.world.flee()
+				return
+			else:
+				print("That is not an option.")
 
 	def attack(self, opponent):
 		print("You hit " + opponent.name + " for " + str(self.strength) + " damage.")
 		opponent.takeDamage(self.strength)
+		if (self.incompetence > 0):
+			print("You hurt yourself "+ str(self.incompetence) +" damage, dummy")
+			self.takeDamage(self.incompetence)
+
+	def useItemBattle(self):
+		self.displayInventory()
+		item = input("Enter item ('x' to cancel): ").lower()
+		if item == "x":
+			return False
+		if self.use(item):
+			return True
+		return self.useItemBattle()
 
 	def takeDamage(self, damage):
 		self.health -= damage
 		print("You are hit for " + str(damage) + " damage.")
-		if self.health <= 0:
-			self.die()
 
 	def die(self):
 		print("You have died.")
 		exit()
 
-	def isAlive(self):
-		return self.health > 0
+	def checkAlive(self):
+		if self.health > 0:
+			return True
+		self.die()

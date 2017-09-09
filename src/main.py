@@ -86,6 +86,15 @@ def parseCommand(command, arg=""):
 		print("...")
 
 
+def restart():
+	global name
+	global world_obj
+	global player_obj
+
+	name = input("Please enter your name: ")
+	world_obj = world.World()
+	player_obj = player.Player(world_obj, name)
+
 name = input("Please enter your name: ")
 world_obj = world.World()
 player_obj = player.Player(world_obj, name)
@@ -103,4 +112,10 @@ while(True):
 	else:
 		parseCommand(command[0])
 
-	world_obj.victoryCheck()
+	player_obj.checkAlive()
+	if world_obj.victoryCheck():
+		response = input("Play again? ")
+		if response.lower() == "y" or response.lower() == "yes":
+			restart()
+		else:
+			exit()

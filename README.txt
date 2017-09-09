@@ -6,8 +6,8 @@ You have been infected by a disease that slowly turns people into zombies.  As h
 
 To play:
 	git clone https://github.com/Moonlock/1WayOut
-	cd 1WayOut/1WayOut
-	./1WayOut
+	cd 1WayOut
+	./1WayOut.py
 
 Once in the game, you can type 'help' at any time to list possible actions.
 
