@@ -67,6 +67,18 @@ def parseCommand(command, arg=""):
 	elif command == "s": go("south")
 	elif command == "e": go("east")
 	elif command == "w": go("west")
+	elif command == "nw": go ("north west")
+	elif command == "ne": go ("north east")
+	elif command == "sw": go ("south west")
+	elif command == "se": go ("south east")
+
+	elif command == "h": go ("Hardware Store")
+	elif command == "f": go ("front door")
+	elif command == "a1": go ("aisle 1")
+	elif command == "a2": go ("aisle 2")	
+	elif command == "a3": go ("aisle 3")
+	elif command == "wa": go("washroom")
+	elif (command == "c") or (command == "ct"): go ("cashier till")
 
 	elif (command == "l") or (command == "look"): look(arg)
 	elif (command == "a") or (command == "attack"): attack(arg)
