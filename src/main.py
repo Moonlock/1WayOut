@@ -68,9 +68,11 @@ def parseLookup(onCommand, arg=""):
 		exitParse = ""
 		numWords = len(exitList)
 		i = 0
-		while i < numWords:
+		while (i < numWords) and (len(exitList[i]) > 1):
 			exitParse = exitParse + exitList[i][0] + exitList[i][1]
 			i = i+1
+		if (i == numWords-1 ) and (len(exitList[i]) == 1):
+			exitParse = exitParse + exitList[i][0]
 		if onCommand == "go":
 			if arg == exitParse.lower():
 				go(exit['localName'].lower())
