@@ -61,41 +61,57 @@ def quit():
 	print('Goodbye!')
 	exit()
 
-def parseCommand(command, arg=""):
-	if command == "go": go(arg)
-	elif command == "n": go("north")
-	elif command == "s": go("south")
-	elif command == "e": go("east")
-	elif command == "w": go("west")
-	elif command == "nw": go ("north west")
-	elif command == "ne": go ("north east")
-	elif command == "sw": go ("south west")
-	elif command == "se": go ("south east")
-
-	elif command == "h": go ("Hardware Store")
-	elif command == "f": go ("front door")
-	elif command == "a1": go ("aisle 1")
-	elif command == "a2": go ("aisle 2")	
-	elif command == "a3": go ("aisle 3")
-	elif command == "wa": go("washroom")
-	elif (command == "c") or (command == "ct"): go ("cashier till")
-
-	elif (command == "l") or (command == "look"): look(arg)
-	elif (command == "a") or (command == "attack"): attack(arg)
-
-	elif command == "get": get(arg)
-	elif command == "use": use(arg)
-	elif (command == "wie") or (command == "wield"): wield(arg)
-	elif command == "unw" or command == "unwield": player_obj.unequipWeapon()
-
-	elif (command == "i") or (command == "inv"): player_obj.displayInventory()
-	elif (command == "stat") or (command == "status"): player_obj.status()
-	elif (command == "m") or (command == "map"): world_obj.printMap()
-	elif command == "help": printHelp()
+def parseLookup(onCommand, arg=""):
 	
-	elif command == "quit": quit()
-	else:
-		print("...")
+	for exit in world_obj.curRoom.exits:
+		exitList = exit['localName'].split()
+		exitParse = ""
+		numWords = len(exitList)
+		i = 0
+		while i < numWords:
+			exitParse = exitParse + exitList[i][0] + exitList[i][1]
+			i = i+1
+		if onCommand == "go":
+			if arg == exitParse.lower():
+				go(exit['localName'].lower())
+				checkstop = 1
+				return checkstop
+		elif onCommand == exitParse.lower():
+			go(exit['localName'].lower())
+			checkstop = 1
+			return checkstop
+
+def parseCommand(command, arg=""):
+
+	finishedParsing = parseLookup(command, arg)
+	if finishedParsing !=1:
+		if command == "go": go(arg)
+		elif command == "n": go("north")
+		elif command == "s": go("south")
+		elif command == "e": go("east")
+		elif command == "w": go("west")
+		elif command == "nw": go ("north west")
+		elif command == "ne": go ("north east")
+		elif command == "sw": go ("south west")
+		elif command == "se": go ("south east")
+	
+		elif (command == "l") or (command == "look"): look(arg)
+		elif (command == "a") or (command == "attack"): attack(arg)
+
+		elif command == "get": get(arg)
+		elif command == "use": use(arg)
+		elif (command == "wie") or (command == "wield"): wield(arg)
+		elif (command == "unw") or (command == "unwield"): player_obj.unequipWeapon()
+
+		elif (command == "i") or (command == "inv"): player_obj.displayInventory()
+		elif (command == "stat") or (command == "status"): player_obj.status()
+		elif (command == "m") or (command == "map"): world_obj.printMap()
+		elif command == "help": printHelp()
+	
+		elif command == "quit": quit()
+
+		else:
+			print("...")
 
 
 def restart():
@@ -118,7 +134,7 @@ print("Type 'help' for help.")
 while(True):
 	print("")
 
-	command = input(player_obj.getPrompt()).split(" ")
+	command = input(player_obj.getPrompt()).split(" ",1)
 	if len(command) == 2:
 		parseCommand(command[0], command[1])
 	else:
