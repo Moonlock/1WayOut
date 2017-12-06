@@ -61,32 +61,28 @@ def quit():
 	print('Goodbye!')
 	exit()
 
-def parseLookup(onCommand, arg=""):
+def parseLookup(command, arg=""):
 	
 	for exit in world_obj.curRoom.exits:
-		exitList = exit['localName'].split()
+		wordList = exit['localName'].split()
 		exitParse = ""
-		numWords = len(exitList)
-		i = 0
-		while (i < numWords) and (len(exitList[i]) > 1):
-			exitParse = exitParse + exitList[i][0] + exitList[i][1]
-			i = i+1
-		if (i == numWords-1 ) and (len(exitList[i]) == 1):
-			exitParse = exitParse + exitList[i][0]
-		if onCommand == "go":
-			if arg == exitParse.lower():
-				go(exit['localName'].lower())
-				checkstop = 1
-				return checkstop
-		elif onCommand == exitParse.lower():
+
+		for word in wordList:
+			exitParse += word[0]
+			if len(word) > 1:
+				exitParse += word[1]
+
+		direction = arg if command == "go" else command
+		if direction == exitParse.lower():
 			go(exit['localName'].lower())
-			checkstop = 1
-			return checkstop
+			return True
+
+	return False
 
 def parseCommand(command, arg=""):
 
 	finishedParsing = parseLookup(command, arg)
-	if finishedParsing !=1:
+	if not finishedParsing:
 		if command == "go": go(arg)
 		elif command == "n": go("north")
 		elif command == "s": go("south")
