@@ -416,26 +416,36 @@ def createWorld(world):
 	hardware.exits.append({"room" : hardwareAisle_2, "localName" : "aisle 3" })
 	hardware.exits.append({"room" : hardwareWashroom, "localName" : "washroom" })	
 	hardware.exits.append({"room" : hardwareCashierTill, "localName" : "cashier till" })
+	hardwareAisle_0.name = "Hardware Store - aisle 1"
+	hardwareAisle_0.desc = ""
 	hardwareAisle_0.exits.append({"room" : mainSt_8, "localName" : "front door" })
 	hardwareAisle_0.exits.append({"room" : hardwareAisle_1, "localName" : "aisle 2" })	
 	hardwareAisle_0.exits.append({"room" : hardwareAisle_2, "localName" : "aisle 3" })
 	hardwareAisle_0.exits.append({"room" : hardwareWashroom, "localName" : "washroom" })	
 	hardwareAisle_0.exits.append({"room" : hardwareCashierTill, "localName" : "cashier till" })
+	hardwareAisle_1.name = "Hardware Store - aisle 2"
+	hardwareAisle_1.desc = ""
 	hardwareAisle_1.exits.append({"room" : mainSt_8, "localName" : "front door" })
 	hardwareAisle_1.exits.append({"room" : hardwareAisle_0, "localName" : "aisle 1" })	
 	hardwareAisle_1.exits.append({"room" : hardwareAisle_2, "localName" : "aisle 3" })
 	hardwareAisle_1.exits.append({"room" : hardwareWashroom, "localName" : "washroom" })	
 	hardwareAisle_1.exits.append({"room" : hardwareCashierTill, "localName" : "cashier till" })
+	hardwareAisle_2.name = "Hardware Store - aisle 3"
+	hardwareAisle_2.desc = ""
 	hardwareAisle_2.exits.append({"room" : mainSt_8, "localName" : "front door" })
 	hardwareAisle_2.exits.append({"room" : hardwareAisle_0, "localName" : "aisle 1" })	
 	hardwareAisle_2.exits.append({"room" : hardwareAisle_1, "localName" : "aisle 2" })
 	hardwareAisle_2.exits.append({"room" : hardwareWashroom, "localName" : "washroom" })	
 	hardwareAisle_2.exits.append({"room" : hardwareCashierTill, "localName" : "cashier till" })
+	hardwareWashroom.name = "Hardware Store - washroom"
+	hardwareWashroom.desc = ""
 	hardwareWashroom.exits.append({"room" : mainSt_8, "localName" : "front door" })
 	hardwareWashroom.exits.append({"room" : hardwareAisle_0, "localName" : "aisle 1" })	
 	hardwareWashroom.exits.append({"room" : hardwareAisle_1, "localName" : "aisle 2" })
 	hardwareWashroom.exits.append({"room" : hardwareAisle_2, "localName" : "aisle 3" })	
-	hardwareWashroom.exits.append({"room" : hardwareCashierTill, "localName" : "cashier till" })	
+	hardwareWashroom.exits.append({"room" : hardwareCashierTill, "localName" : "cashier till" })
+	hardwareCashierTill.name = "Hardware Store - cashier till"
+	hardwareCashierTill.desc = ""
 	hardwareCashierTill.exits.append({"room" : mainSt_8, "localName" : "front door" })
 	hardwareCashierTill.exits.append({"room" : hardwareAisle_0, "localName" : "aisle 1" })	
 	hardwareCashierTill.exits.append({"room" : hardwareAisle_1, "localName" : "aisle 2" })
@@ -449,18 +459,26 @@ def createWorld(world):
 	gasStation.exits.append({"room" : gasStationWashroom, "localName" : "washroom" })
 	gasStation.exits.append({"room" : gasStationShop, "localName" : "shop" })
 	gasStation.exits.append({"room" : gasStationPumps, "localName" : "pumps" })
+	gasStationCashierTill.name = "Gas Station - cashier"
+	gasStationCashierTill.desc = ""
 	gasStationCashierTill.exits.append({"room" : mainSt_6, "localName" : "front door" })
 	gasStationCashierTill.exits.append({"room" : gasStationWashroom, "localName" : "washroom" })
 	gasStationCashierTill.exits.append({"room" : gasStationShop, "localName" : "shop" })
 	gasStationCashierTill.exits.append({"room" : gasStationPumps, "localName" : "pumps" })
+	gasStationWashroom.name = "Gas Station - washroom"
+	gasStationWashroom.desc = ""
 	gasStationWashroom.exits.append({"room" : mainSt_6, "localName" : "front door" })
 	gasStationWashroom.exits.append({"room" : gasStationCashierTill, "localName" : "cashier till" })	
 	gasStationWashroom.exits.append({"room" : gasStationShop, "localName" : "shop" })
 	gasStationWashroom.exits.append({"room" : gasStationPumps, "localName" : "pumps" })
+	gasStationShop.name = "Gas Station - shop"
+	gasStationShop.desc = ""
 	gasStationShop.exits.append({"room" : mainSt_6, "localName" : "front door" })
 	gasStationShop.exits.append({"room" : gasStationCashierTill, "localName" : "cashier till" })	
 	gasStationShop.exits.append({"room" : gasStationWashroom, "localName" : "washroom" })
 	gasStationShop.exits.append({"room" : gasStationPumps, "localName" : "pumps" })	
+	gasStationPumps.name = "Gas Station - pumps"
+	gasStationPumps.desc = ""
 	gasStationPumps.exits.append({"room" : mainSt_6, "localName" : "front door" })
 	gasStationPumps.exits.append({"room" : gasStationCashierTill, "localName" : "cashier till" })	
 	gasStationPumps.exits.append({"room" : gasStationWashroom, "localName" : "washroom" })
@@ -473,18 +491,26 @@ def createWorld(world):
 	restaurant.exits.append({"room" : restaurantKitchen, "localName" : "kitchen" })
 	restaurant.exits.append({"room" : restaurantWashroom, "localName" : "washroom" })
 	restaurant.exits.append({"room" : restaurantCashierTill, "localName" : "cashier till" })
+	restaurantTables.name = "Restaurant - tables"
+	restaurantTables.desc = ""
 	restaurantTables.exits.append({"room" : mainSt_2, "localName" : "front door" })
 	restaurantTables.exits.append({"room" : restaurantCashierTill, "localName" : "cashier till" })
 	restaurantTables.exits.append({"room" : restaurantKitchen, "localName" : "kitchen" })
 	restaurantTables.exits.append({"room" : restaurantWashroom, "localName" : "washroom" })
+	restaurantKitchen.name = "Restaurant - kitchen"
+	restaurantKitchen.desc = ""
 	restaurantKitchen.exits.append({"room" : mainSt_2, "localName" : "front door" })
 	restaurantKitchen.exits.append({"room" : restaurantTables, "localName" : "tables" })	
 	restaurantKitchen.exits.append({"room" : restaurantCashierTill, "localName" : "cashier till" })
 	restaurantKitchen.exits.append({"room" : restaurantWashroom, "localName" : "washroom" })
+	restaurantWashroom.name = "Restaurant - washroom"
+	restaurantWashroom.desc = ""
 	restaurantWashroom.exits.append({"room" : mainSt_2, "localName" : "front door" })
 	restaurantWashroom.exits.append({"room" : restaurantTables, "localName" : "tables" })	
 	restaurantWashroom.exits.append({"room" : restaurantCashierTill, "localName" : "cashier till" })
 	restaurantWashroom.exits.append({"room" : restaurantKitchen, "localName" : "kitchen" })	
+	restaurantCashierTill.name = "Restaurant - till"
+	restaurantCashierTill.desc = ""
 	restaurantCashierTill.exits.append({"room" : mainSt_2, "localName" : "front door" })
 	restaurantCashierTill.exits.append({"room" : restaurantTables, "localName" : "tables" })	
 	restaurantCashierTill.exits.append({"room" : restaurantKitchen, "localName" : "kitchen" })
@@ -500,27 +526,35 @@ def createWorld(world):
 	hotel.exits.append({"room" : hotelWashroom, "localName" : "washroom" })
 	hotel.exits.append({"room" : hotelCashierTill, "localName" : "cashier till" })
 	hotel.exits.append({"room" : hotelStairs, "localName" : "stairs" })	
+	hotelRoom_0.name = "Hotel - room 11"
+	hotelRoom_0.desc = ""
 	hotelRoom_0.exits.append({"room" : mainSt_4, "localName" : "front door" })	
 	hotelRoom_0.exits.append({"room" : hotelRoom_1, "localName" : "room 12" })
 	hotelRoom_0.exits.append({"room" : hotelRoom_2, "localName" : "room 13" })
 	hotelRoom_0.exits.append({"room" : hotelLobby, "localName" : "lobby" })
 	hotelRoom_0.exits.append({"room" : hotelWashroom, "localName" : "washroom" })
 	hotelRoom_0.exits.append({"room" : hotelCashierTill, "localName" : "cashier till" })
-	hotelRoom_0.exits.append({"room" : hotelStairs, "localName" : "stairs" })	
+	hotelRoom_0.exits.append({"room" : hotelStairs, "localName" : "stairs" })
+	hotelRoom_1.name = "Hotel - room 12"
+	hotelRoom_1.desc = ""	
 	hotelRoom_1.exits.append({"room" : mainSt_4, "localName" : "front door" })
 	hotelRoom_1.exits.append({"room" : hotelRoom_0, "localName" : "room 11" })	
 	hotelRoom_1.exits.append({"room" : hotelRoom_2, "localName" : "room 13" })
 	hotelRoom_1.exits.append({"room" : hotelLobby, "localName" : "lobby" })
 	hotelRoom_1.exits.append({"room" : hotelWashroom, "localName" : "washroom" })
 	hotelRoom_1.exits.append({"room" : hotelCashierTill, "localName" : "cashier till" })
-	hotelRoom_1.exits.append({"room" : hotelStairs, "localName" : "stairs" })	
+	hotelRoom_1.exits.append({"room" : hotelStairs, "localName" : "stairs" })
+	hotelRoom_2.name = "Hotel - room 13"
+	hotelRoom_2.desc = ""	
 	hotelRoom_2.exits.append({"room" : mainSt_4, "localName" : "front door" })
 	hotelRoom_2.exits.append({"room" : hotelRoom_0, "localName" : "room 11" })	
 	hotelRoom_2.exits.append({"room" : hotelRoom_1, "localName" : "room 12" })
 	hotelRoom_2.exits.append({"room" : hotelLobby, "localName" : "lobby" })
 	hotelRoom_2.exits.append({"room" : hotelWashroom, "localName" : "washroom" })
 	hotelRoom_2.exits.append({"room" : hotelCashierTill, "localName" : "cashier till" })
-	hotelRoom_2.exits.append({"room" : hotelStairs, "localName" : "stairs" })	
+	hotelRoom_2.exits.append({"room" : hotelStairs, "localName" : "stairs" })
+	hotelLobby.name = "Hotel - lobby"
+	hotelLobby.desc = ""	
 	hotelLobby.exits.append({"room" : mainSt_4, "localName" : "front door" })
 	hotelLobby.exits.append({"room" : hotelRoom_0, "localName" : "room 11" })	
 	hotelLobby.exits.append({"room" : hotelRoom_1, "localName" : "room 12" })
@@ -528,6 +562,8 @@ def createWorld(world):
 	hotelLobby.exits.append({"room" : hotelWashroom, "localName" : "washroom" })
 	hotelLobby.exits.append({"room" : hotelCashierTill, "localName" : "cashier till" })
 	hotelLobby.exits.append({"room" : hotelStairs, "localName" : "stairs" })	
+	hotelWashroom.name = "Hotel - washroom"
+	hotelWashroom.desc = ""
 	hotelWashroom.exits.append({"room" : mainSt_4, "localName" : "front door" })
 	hotelWashroom.exits.append({"room" : hotelRoom_0, "localName" : "room 11" })	
 	hotelWashroom.exits.append({"room" : hotelRoom_1, "localName" : "room 12" })
@@ -535,23 +571,33 @@ def createWorld(world):
 	hotelWashroom.exits.append({"room" : hotelLobby, "localName" : "lobby" })
 	hotelWashroom.exits.append({"room" : hotelCashierTill, "localName" : "cashier till" })
 	hotelWashroom.exits.append({"room" : hotelStairs, "localName" : "stairs" })	
+	hotelCashierTill.name = "Hotel - cashier till"
+	hotelCashierTill.desc = ""
 	hotelCashierTill.exits.append({"room" : mainSt_4, "localName" : "front door" })
 	hotelCashierTill.exits.append({"room" : hotelRoom_0, "localName" : "room 11" })	
 	hotelCashierTill.exits.append({"room" : hotelRoom_1, "localName" : "room 12" })
 	hotelCashierTill.exits.append({"room" : hotelRoom_2, "localName" : "room 13" })
 	hotelCashierTill.exits.append({"room" : hotelLobby, "localName" : "lobby" })
 	hotelCashierTill.exits.append({"room" : hotelWashroom, "localName" : "washroom" })
-	hotelCashierTill.exits.append({"room" : hotelStairs, "localName" : "stairs" })	
+	hotelCashierTill.exits.append({"room" : hotelStairs, "localName" : "stairs" })
+	hotelStairs.name = "Hotel - top floor"
+	hotelStairs.desc = ""	
 	hotelStairs.exits.append({"room" : hotel, "localName" : "down stairs" })	
 	hotelStairs.exits.append({"room" : hotelRoom_3, "localName" : "room 21" })
 	hotelStairs.exits.append({"room" : hotelRoom_4, "localName" : "room 22" })
 	hotelStairs.exits.append({"room" : hotelRoom_5, "localName" : "room 23" })
+	hotelRoom_3.name = "Hotel - room 21"
+	hotelRoom_3.desc = ""
 	hotelRoom_3.exits.append({"room" : hotel, "localName" : "down stairs" })	
 	hotelRoom_3.exits.append({"room" : hotelRoom_4, "localName" : "room 22" })
 	hotelRoom_3.exits.append({"room" : hotelRoom_5, "localName" : "room 23" })
+	hotelRoom_4.name = "Hotel - room 22"
+	hotelRoom_4.desc = ""
 	hotelRoom_4.exits.append({"room" : hotel, "localName" : "down stairs" })
 	hotelRoom_4.exits.append({"room" : hotelRoom_3, "localName" : "room 21" })
 	hotelRoom_4.exits.append({"room" : hotelRoom_5, "localName" : "room 23" })
+	hotelRoom_5.name = "Hotel - room 23"
+	hotelRoom_5.desc = ""
 	hotelRoom_5.exits.append({"room" : hotel, "localName" : "down stairs" })
 	hotelRoom_5.exits.append({"room" : hotelRoom_3, "localName" : "room 21" })
 	hotelRoom_5.exits.append({"room" : hotelRoom_4, "localName" : "room 22" })
@@ -563,18 +609,26 @@ def createWorld(world):
 	townHall.exits.append({"room" : townHallWashroom, "localName" : "washroom" })
 	townHall.exits.append({"room" : townHallOffice, "localName" : "office" })
 	townHall.exits.append({"room" : townHallMeetingRoom, "localName" : "meeting room" })
+	townHallLobby.name = "Town Hall - lobby"
+	townHallLobby.desc = ""
 	townHallLobby.exits.append({"room" : mozenSt_3, "localName" : "front door" })
 	townHallLobby.exits.append({"room" : townHallWashroom, "localName" : "washroom" })
 	townHallLobby.exits.append({"room" : townHallOffice, "localName" : "office" })
 	townHallLobby.exits.append({"room" : townHallMeetingRoom, "localName" : "meeting room" })
+	townHallWashroom.name = "Town Hall - washroom"
+	townHallWashroom.desc = ""
 	townHallWashroom.exits.append({"room" : mozenSt_3, "localName" : "front door" })
 	townHallWashroom.exits.append({"room" : townHallLobby, "localName" : "lobby" })
 	townHallWashroom.exits.append({"room" : townHallOffice, "localName" : "office" })
 	townHallWashroom.exits.append({"room" : townHallMeetingRoom, "localName" : "meeting room" })
+	townHallOffice.name = "Town Hall - office"
+	townHallOffice.desc = ""
 	townHallOffice.exits.append({"room" : mozenSt_3, "localName" : "front door" })
 	townHallOffice.exits.append({"room" : townHallLobby, "localName" : "lobby" })
 	townHallOffice.exits.append({"room" : townHallWashroom, "localName" : "washroom" })
 	townHallOffice.exits.append({"room" : townHallMeetingRoom, "localName" : "meeting room" })
+	townHallMeetingRoom.name = "Town Hall - meeting room"
+	townHallMeetingRoom.desc = ""
 	townHallMeetingRoom.exits.append({"room" : mozenSt_3, "localName" : "front door" })
 	townHallMeetingRoom.exits.append({"room" : townHallLobby, "localName" : "lobby" })
 	townHallMeetingRoom.exits.append({"room" : townHallWashroom, "localName" : "washroom" })
