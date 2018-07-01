@@ -152,14 +152,14 @@ def createWorld(world):
 
 	terranceCrs_1.name = "Terrance Crescent"
 	terranceCrs_1.desc = ""
-	terranceCrs_1.exits.append({"room" : terranceCrs_2, "localName" : "north east" })
+	terranceCrs_1.exits.append({"room" : terranceCrs_2, "localName" : "northeast" })
 	terranceCrs_1.exits.append({"room" : terranceCrs_0, "localName" : "south" })	
 	terranceCrs_1.exits.append({"room" : monroeSt_0, "localName" : "east" })
 
 	terranceCrs_2.name = "Terrance Crescent"
 	terranceCrs_2.desc = ""
 	terranceCrs_2.exits.append({"room" : terranceCrs_3, "localName" : "east" })
-	terranceCrs_2.exits.append({"room" : terranceCrs_1, "localName" : "south west" })	
+	terranceCrs_2.exits.append({"room" : terranceCrs_1, "localName" : "southwest" })	
 
 	terranceCrs_3.name = "Terrance Crescent"
 	terranceCrs_3.desc = ""
@@ -174,18 +174,18 @@ def createWorld(world):
 
 	terranceCrs_5.name = "Terrance Crescent"
 	terranceCrs_5.desc = ""
-	terranceCrs_5.exits.append({"room" : terranceCrs_6, "localName" : "south east" })
+	terranceCrs_5.exits.append({"room" : terranceCrs_6, "localName" : "southeast" })
 	terranceCrs_5.exits.append({"room" : terranceCrs_4, "localName" : "west" })
 
 	terranceCrs_6.name = "Terrance Crescent"
 	terranceCrs_6.desc = ""
-	terranceCrs_6.exits.append({"room" : terranceCrs_7, "localName" : "south east" })
-	terranceCrs_6.exits.append({"room" : terranceCrs_5, "localName" : "north west" })	
+	terranceCrs_6.exits.append({"room" : terranceCrs_7, "localName" : "southeast" })
+	terranceCrs_6.exits.append({"room" : terranceCrs_5, "localName" : "northwest" })	
 	terranceCrs_6.exits.append({"room" : monroeSt_3, "localName" : "west" })
 
 	terranceCrs_7.name = "Terrance Crescent"
 	terranceCrs_7.desc = ""
-	terranceCrs_7.exits.append({"room" : quintenAve_3, "localName" : "south east" })
+	terranceCrs_7.exits.append({"room" : quintenAve_3, "localName" : "southeast" })
 	terranceCrs_7.exits.append({"room" : zirrilaSt_3, "localName" : "west" })
 
 	floydAve_0.name = "Floyd Avenue"
@@ -294,12 +294,12 @@ def createWorld(world):
 
 	carlAve_3.name = "Carl Avenue"
 	carlAve_3.desc = ""
-	carlAve_3.exits.append({"room" : carlAve_4, "localName" : "north east" })
+	carlAve_3.exits.append({"room" : carlAve_4, "localName" : "northeast" })
 	carlAve_3.exits.append({"room" : carlAve_2, "localName" : "south" })
 
 	carlAve_4.name = "Carl Avenue"
 	carlAve_4.desc = ""
-	carlAve_4.exits.append({"room" : carlAve_3, "localName" : "south west" })
+	carlAve_4.exits.append({"room" : carlAve_3, "localName" : "southwest" })
 	carlAve_4.exits.append({"room" : terranceCrs_0, "localName" : "east" })	
 
 	quintenAve_0.name = "Quinten Avenue"
@@ -320,7 +320,7 @@ def createWorld(world):
 
 	quintenAve_3.name = "Quinten Avenue"
 	quintenAve_3.desc = ""
-	quintenAve_3.exits.append({"room" : terranceCrs_7, "localName" : "north west" })
+	quintenAve_3.exits.append({"room" : terranceCrs_7, "localName" : "northwest" })
 	quintenAve_3.exits.append({"room" : quintenAve_2, "localName" : "south" })	
 
 	terentinoSt_0.name = "Terentino Street"
