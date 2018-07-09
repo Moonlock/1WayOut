@@ -1,4 +1,4 @@
-class Zombie:
+class Npc:
 
 	def __init__(self, name, health, strength, description, world):
 		self.name = name
@@ -20,7 +20,6 @@ class Zombie:
 			self.die()
 
 	def die(self):
-		self.world.remainingZombies -= 1
 		self.hostile = False
 		self.world.removeNpc(self)
 		print(self.name + " has died.")

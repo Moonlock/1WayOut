@@ -4,7 +4,7 @@ import string
 import random
 
 import items
-import zombie
+import npc
 
 # Fix input() vs raw_input() mess
 try: input = raw_input
@@ -14,7 +14,6 @@ class World:
 
 	def __init__(self):
 		self.rooms = []
-		self.remainingZombies = 0
 		worldGeneration.createWorld(self)
 
 	def printMap(self):
@@ -164,7 +163,4 @@ class World:
 		self.curRoom = random.choice(self.curRoom.exits)['room']
 
 	def victoryCheck(self):
-		if self.remainingZombies == 0:
-			print("You win!")
-			return True
 		return False

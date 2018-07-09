@@ -1,6 +1,6 @@
 import random
 
-import zombie
+import npc
 import items
 
 class Room:
@@ -905,8 +905,8 @@ def createWorld(world):
 	house_1RecreationRoom.exits.append({"room" : house_1Washroom_1, "localName" : "washroom"}) 
 
 	
-	zom0 = zombie.Zombie("zombie", 5, 1, "Brains....", world)
-	zom1 = zombie.Zombie("super zombie", 20, 3, "He looks pretty tough.", world)
+	zom0 = npc.Npc("zombie", 5, 1, "Brains....", world)
+	zom1 = npc.Npc("super zombie", 20, 3, "He looks pretty tough.", world)
 
 	if (int)(random.random()*2):
 		hardwareAisle_1.items.append(items.Axe())
@@ -920,17 +920,13 @@ def createWorld(world):
 
 	if (int)(random.random()*2):
 		quintenAve_2.npcs.append(zom0)
-		world.remainingZombies += 1
 	else: 
 		mozenSt_0.npcs.append(zom1)
-		world.remainingZombies += 1
 
 	if (int)(random.random()*2):
 		newtonAve_0.npcs.append(zom0)
-		world.remainingZombies += 1
 	else: 
 		zirrilaSt_1.npcs.append(zom1)
-		world.remainingZombies += 1
 
 	if (int)(random.random()*2):
 		carlAve_4.items.append(items.HammerTime())
